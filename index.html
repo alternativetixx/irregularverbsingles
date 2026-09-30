@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Verbos irregulares 1 – Estudio</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg"><meta name="theme-color" content="#0B7A75">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+:root{--bg:#EEF2F0;--card:#fff;--ink:#14262B;--mut:#5A6B70;--line:#D3DCD9;--acc:#0B7A75;--acc2:#E2F1EF;--ok:#237A45;--okbg:#DDF1E4;--bad:#C2392C;--badbg:#FBE2DE;--on:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1A1D;--card:#17262A;--ink:#E6EEEC;--mut:#93A6A9;--line:#2B3F43;--acc:#4FC3BB;--acc2:#17353A;--ok:#6ED08F;--okbg:#16372A;--bad:#FF8A7C;--badbg:#3D1F1C;--on:#0F1A1D}}
+:root[data-theme="dark"]{--bg:#0F1A1D;--card:#17262A;--ink:#E6EEEC;--mut:#93A6A9;--line:#2B3F43;--acc:#4FC3BB;--acc2:#17353A;--ok:#6ED08F;--okbg:#16372A;--bad:#FF8A7C;--badbg:#3D1F1C;--on:#0F1A1D}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 "Source Sans 3",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.15;margin:0 0 .5em}
+h1{font-size:1.9rem;font-weight:800}h2{font-size:1.35rem}h3{font-size:1.05rem}
+header{padding:20px 16px 6px;max-width:900px;margin:auto}
+header p{margin:0;color:var(--mut)}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);display:flex;gap:6px;overflow-x:auto;padding:10px 16px;max-width:none}
+nav button{flex:none}
+main{max-width:900px;margin:auto;padding:16px}
+button,select{font:inherit;color:var(--ink)}
+button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:8px 16px;cursor:pointer}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+button.on,button.pri{background:var(--acc);border-color:var(--acc);color:var(--on);font-weight:600}
+button.ok{background:var(--okbg);border-color:var(--ok);color:var(--ok);font-weight:600}
+button.no{background:var(--badbg);border-color:var(--bad);color:var(--bad);font-weight:600}
+select{border:1px solid var(--line);background:var(--card);border-radius:8px;padding:8px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0}
+.mut{color:var(--mut)}
+.wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:560px}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--line)}
+th{font-family:"Bricolage Grotesque",sans-serif;font-size:.95rem}
+td.n{color:var(--mut);width:2em}
+.cv td.c:not(.rev) span{background:var(--line);color:transparent;border-radius:4px;cursor:pointer;user-select:none}
+.cv td.c{cursor:pointer}
+.chip{display:inline-block;background:var(--acc2);border-radius:8px;padding:3px 9px;margin:3px 4px 3px 0;font-size:.95rem}
+.fc{min-height:230px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;cursor:pointer;padding:24px}
+.fc .big{font:800 2.4rem "Bricolage Grotesque",sans-serif}
+.fc dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 14px;text-align:left;font-size:1.15rem}
+.fc dt{color:var(--mut)}.fc dd{margin:0;font-weight:600}
+.fc dd.g{color:var(--acc)}
+.bar{height:8px;background:var(--line);border-radius:8px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--acc)}
+.sheet input{width:100%;min-width:110px;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:8px;font:inherit}
+.sheet input.ok{border-color:var(--ok);background:var(--okbg)}
+.sheet input.bad{border-color:var(--bad);background:var(--badbg)}
+.sheet .fix{display:block;color:var(--bad);font-size:.85rem;margin-top:2px}
+.sheet td.giv{font-weight:600;background:var(--acc2)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:6px}
+.v{border-radius:8px;padding:6px 8px;background:var(--card);border:1px solid var(--line);font-weight:600}
+.v.g{background:var(--okbg);border-color:var(--ok)}.v.w{background:var(--badbg);border-color:var(--bad)}
+.v small{display:block;font-weight:400;color:var(--mut)}
+.step{display:grid;grid-template-columns:5.5em 1fr;gap:4px 12px;padding:10px 0;border-bottom:1px solid var(--line)}
+.step:last-child{border:0}.step b{color:var(--acc)}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;border-radius:10px}
+.big-in{width:100%;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:8px;padding:10px;font:inherit;font-size:1.2rem}
+.sp{padding:2px 8px}header button{flex:none}
+</style>
+</head>
+<body>
+<header style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start"><div><h1>Verbos irregulares 1</h1><p>29 verbos · infinitivo, pasado simple, participio pasado, català</p></div><button id="th" onclick="theme()"></button></header>
+<nav id="nav"></nav>
+<main id="app"></main>
+<script>
+const V=`be|was/were|been|ser/estar
+beat|beat|beaten|colpejar/batre/vèncer
+become|became|become|convertir-se/esdevenir
+begin|began|begun|començar/iniciar
+bite|bit|bitten|mossegar
+blow|blew|blown|bufar
+break|broke|broken|trencar/rompre
+bring|brought|brought|portar/duer
+burn|burnt/burned|burnt/burned|cremar/cremar-se
+build|built|built|construir
+buy|bought|bought|comprar
+can|could|been able to|poder
+catch|caught|caught|agafar/atrapar
+choose|chose|chosen|triar/escollir
+come|came|come|venir
+cost|cost|cost|costar
+cut|cut|cut|tallar
+do|did|done|fer
+draw|drew|drawn|dibuixar/treure
+dream|dreamt/dreamed|dreamt/dreamed|somiar
+drink|drank|drunk|beure
+drive|drove|driven|conduir
+eat|ate|eaten|menjar
+fall|fell|fallen|caure
+feed|fed|fed|alimentar/donar menjar
+feel|felt|felt|sentir
+fight|fought|fought|lluitar/barallar-se
+find|found|found|trobar
+fly|flew|flown|volar`.split('\n').map((l,i)=>{const a=l.split('|');return{id:i,inf:a[0],past:a[1],pp:a[2],cat:a[3]}});
+const K=['inf','past','pp','cat'],L={inf:'Infinitivo',past:'Pasado simple',pp:'Participio pasado',cat:'Català'};
+const G=[['Las tres formas iguales',['cost','cut']],['Pasado = participio',['bring','build','buy','catch','feed','feel','fight','find','burn','dream']],['Infinitivo = participio',['become','come']],['Cambio de vocal i – a – u',['begin','drink']],['Especiales',['be','can']],['Participio acaba en -n / -ne',['beat','bite','blow','break','choose','draw','drive','eat','fall','fly','do']]];
+const TABS=[['plan','Plan'],['learn','Aprender'],['cards','Tarjetas'],['exam','Examen'],['test','Tipo test'],['sprint','Sprint'],['prog','Progreso']];
+let view='plan',hide=new Set(),fc=null,qz=null,S={},M={},mc=null,sp=null;
+try{S=JSON.parse(localStorage.getItem('iv1')||'{}')}catch(e){}
+try{M=JSON.parse(localStorage.getItem('iv1m')||'{}')}catch(e){}
+const save=()=>{try{localStorage.setItem('iv1',JSON.stringify(S));localStorage.setItem('iv1m',JSON.stringify(M))}catch(e){}};
+const IV=[0,1,2,4,7,14],day=o=>new Date(Date.now()-(o||0)*864e5).toISOString().slice(0,10);
+const mark=(id,ok)=>{const s=S[id]||(S[id]={ok:0,ko:0});ok?s.ok++:s.ko++;s.last=ok?1:0;s.box=ok?Math.min(5,(s.box||0)+1):1;s.due=Date.now()+IV[s.box]*864e5;
+  if(M.day!==day()){M.streak=M.day===day(1)?(M.streak||0)+1:1;M.day=day();M.today=0}M.today=(M.today||0)+1;save()};
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[·.]/g,'').replace(/\s+/g,' ').trim();
+const right=(u,a)=>{const al=a.split('/').map(norm),p=u.split(/[\/,]/).map(norm).filter(Boolean);return p.length>0&&p.every(x=>al.includes(x))};
+const weak=()=>{const w=V.filter(v=>{const s=S[v.id];return s&&(s.last===0||s.ko>s.ok)});return w.length?w:V};
+const deck=d=>d==='a'?V.slice(0,10):d==='b'?V.slice(10,20):d==='c'?V.slice(20):d==='weak'?weak():d==='due'?V.filter(v=>!S[v.id]||(S[v.id].due||0)<=Date.now()):V;
+const DECKS=[['all','Los 29'],['a','1–10'],['b','11–20'],['c','21–29'],['due','Para repasar hoy'],['weak','Mis verbos flojos']];
+const opts=(arr,sel)=>arr.map(([v,t])=>`<option value="${v}"${v===sel?' selected':''}>${t}</option>`).join('');
+
+function go(v){view=v;render();scrollTo(0,0)}
+function render(){
+  $('nav').innerHTML=TABS.map(([k,t])=>`<button class="${k===view?'on':''}" onclick="go('${k}')">${t}</button>`).join('');
+  $('app').innerHTML=({plan,learn,cards,exam,test,sprint,prog})[view]();
+}
+
+function plan(){
+  const st=[['Bloque 1','<b>Aprende</b> los seis patrones en la pestaña Aprender (15 min). La mayoría de verbos siguen un patrón, así que memorizas grupos, no 29 verbos sueltos.'],
+  ['Bloque 2','Verbos 1–10: tapa columnas en Aprender y ponte a prueba (10 min); luego tarjetas de 1–10 hasta vaciar el montón (15 min).'],
+  ['Bloque 3','Igual con los verbos 11–20.'],
+  ['Bloque 4','Igual con los verbos 21–29.'],
+  ['Descanso','Sal a caminar, come, haz otra cosa durante una hora. Espaciar el estudio ayuda a recordar.'],
+  ['Bloque 5','Tarjetas de <i>Los 29</i> con frente aleatorio (20 min). Después una hoja de examen con los 29.'],
+  ['Bloque 6','Tarjetas de <i>Mis verbos flojos</i> y luego una hoja de examen del mismo mazo. Repite hasta que salga limpia.'],
+  ['Antes de dormir','Un Sprint de 60 s y una última hoja de examen. Por la mañana, repite antes del examen real. Usa «Para repasar hoy» para el repaso espaciado.']];
+  return `<div class="card"><h2>Plan de un día</h2><p class="mut">Unas 3 horas de trabajo concentrado, en bloques cortos. La web recuerda qué verbos fallas.</p>${st.map(s=>`<div class="step"><b>${s[0]}</b><span>${s[1]}</span></div>`).join('')}</div>
+  <div class="row"><button class="pri" onclick="go('learn')">Empezar por Aprender</button><button onclick="go('cards')">Tarjetas</button><button onclick="go('exam')">Examen</button></div>`;
+}
+
+function learn(){
+  const f=window.lf||'all';
+  const rows=deck(f).map(v=>`<tr><td class="n">${v.id+1}</td>${K.map(k=>`<td class="c c-${k}" onclick="this.classList.toggle('rev')"><span>${v[k]}</span></td>`).join('')}<td><button class="sp" aria-label="Escuchar ${v.inf}" onclick="sayRow(${v.id})">🔊</button></td></tr>`).join('');
+  const groups=G.map(([n,l])=>`<div class="card"><h3>${n}</h3>${l.map(x=>{const v=V.find(y=>y.inf===x);return `<span class="chip">${v.inf} – ${v.past} – ${v.pp}</span>`}).join('')}</div>`).join('');
+  return `<h2>Patrones</h2>${groups}
+  <h2>Tapa y ponte a prueba</h2>
+  <div class="row"><span class="mut">Tapar:</span>${K.map(k=>`<button class="${hide.has(k)?'on':''}" onclick="hide.has('${k}')?hide.delete('${k}'):hide.add('${k}');render()">${L[k]}</button>`).join('')}
+  <select onchange="window.lf=this.value;render()" aria-label="Verbos">${opts(DECKS.slice(0,4),f)}</select></div>
+  <p class="mut">Di la respuesta en voz alta y toca una casilla gris para verla.</p>
+  <div class="card wrap"><table class="cv"><thead><tr><th></th>${K.map(k=>`<th>${L[k]}</th>`).join('')}<th></th></tr></thead><tbody>${rows}</tbody></table></div>${hideStyle()}`;
+}
+function hideStyle(){
+  // columns not covered are always visible
+  const vis=K.filter(k=>!hide.has(k)).map(k=>`.cv td.c-${k} span{background:none!important;color:inherit!important;cursor:default}`).join('');
+  return `<style>${vis}</style>`;
+}
+
+/* Flashcards */
+function fcStart(){
+  const d=$('fd').value,f=$('ff').value;
+  const q=shuffle(deck(d)).map(v=>({id:v.id,f:f==='rand'?K[Math.random()*4|0]:f}));
+  fc={q,total:q.length,flip:false,known:0};render();
+}
+function fcAns(ok){
+  const c=fc.q.shift();mark(c.id,ok);
+  if(ok)fc.known++;else fc.q.splice(Math.min(3,fc.q.length),0,{id:c.id,f:c.f});
+  fc.flip=false;render();
+}
+function cards(){
+  if(!fc)return `<div class="card"><h2>Tarjetas</h2><p class="mut">Las tarjetas que falles vuelven a salir tras unas cuantas, hasta que las sepas.</p>
+  <div class="row"><select id="fd" aria-label="Mazo">${opts(DECKS,window.deckPick||'all')}</select>
+  <select id="ff" aria-label="Frente"><option value="rand">Frente: aleatorio</option>${K.map(k=>`<option value="${k}">Frente: ${L[k]}</option>`).join('')}</select>
+  <button class="pri" onclick="fcStart()">Empezar</button></div></div>`;
+  if(!fc.q.length){const t=fc.total;fc=null;return `<div class="card"><h2>Mazo terminado</h2><p>Has superado las ${t} tarjetas. Prueba ahora la hoja de examen.</p><div class="row"><button class="pri" onclick="go('exam')">Hoja de examen</button><button onclick="render()">Nuevo mazo</button></div></div>`}
+  const c=fc.q[0],v=V[c.id];
+  const body=fc.flip?`<dl>${K.map(k=>`<dt>${L[k]}</dt><dd class="${k===c.f?'g':''}">${v[k]}</dd>`).join('')}</dl>`:`<div class="mut">${L[c.f]}</div><div class="big">${v[c.f]}</div><p class="mut">Toca para girar (espacio)</p>`;
+  return `<div class="row"><div class="bar" style="flex:1"><i style="width:${fc.known/fc.total*100}%"></i></div><span class="mut">${fc.known}/${fc.total} sabidas · quedan ${fc.q.length}</span></div>
+  <div class="card fc" onclick="fc.flip=!fc.flip;render()" tabindex="0">${body}</div>
+  <div class="row" style="justify-content:center">${fc.flip?`<button class="no" onclick="fcAns(false)">Otra vez (←)</button><button class="ok" onclick="fcAns(true)">Lo sé (→)</button>`:`<button onclick="fc.flip=true;render()">Ver respuesta</button>`}<button onclick="sayRow(${c.id})">🔊 Escuchar</button><button onclick="fc=null;render()">Salir</button></div>`;
+}
+
+/* Exam sheet */
+function qzStart(list){
+  const m=$('qm')?$('qm').value:qz.m;
+  qz={m,rows:list.map(v=>({v,g:m==='mix'?K[Math.random()*4|0]:m})),done:false};render();
+}
+function qzNew(){let l=deck($('qd').value);if(!l.length)l=V;qzStart(shuffle(l))}
+function qzCheck(){
+  let cells=0,good=0,rows=0;const bad=[];
+  qz.rows.forEach((r,i)=>{let all=true;
+    K.forEach(k=>{if(k===r.g)return;const inp=$(`q${i}${k}`);cells++;
+      const ok=right(inp.value,r.v[k]);inp.className=ok?'ok':'bad';inp.readOnly=true;
+      const old=inp.nextElementSibling;if(old)old.remove();
+      if(ok)good++;else{all=false;inp.insertAdjacentHTML('afterend',`<span class="fix">${r.v[k]}</span>`)}});
+    mark(r.v.id,all);if(all)rows++;else bad.push(r.v)});
+  qz.done=true;qz.bad=bad;
+  $('res').innerHTML=`<div class="card"><h2>${good} / ${cells} correctas</h2><p>${rows} de ${qz.rows.length} filas totalmente correctas.</p><div class="row">${bad.length?`<button class="pri" onclick="qzStart(qz.bad)">Repetir ${bad.length} fallos</button>`:''}<button onclick="qz=null;render()">Nueva hoja</button></div></div>`;
+  $('res').scrollIntoView({behavior:'smooth'});
+}
+function exam(){
+  if(!qz)return `<div class="card"><h2>Hoja de examen</h2><p class="mut">Cada fila te da una columna. Rellena las otras tres, como en el examen real. Usa / para dos respuestas (p. ej. burnt/burned). Se ignoran tildes y mayúsculas.</p>
+  <div class="row"><select id="qd" aria-label="Verbos">${opts(DECKS,'all')}</select>
+  <select id="qm" aria-label="Columna dada"><option value="mix">Dato: mezclado</option>${K.map(k=>`<option value="${k}">Dato: solo ${L[k]}</option>`).join('')}</select>
+  <button class="pri" onclick="qzNew()">Crear hoja</button></div></div>`;
+  const rows=qz.rows.map((r,i)=>`<tr><td class="n">${i+1}</td>${K.map(k=>k===r.g?`<td class="giv">${r.v[k]}</td>`:`<td><input id="q${i}${k}" autocomplete="off" autocapitalize="none" spellcheck="false" aria-label="${L[k]} de la fila ${i+1}"></td>`).join('')}</tr>`).join('');
+  return `<div class="card wrap sheet"><table><thead><tr><th></th>${K.map(k=>`<th>${L[k]}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>
+  <div class="row"><button class="pri" onclick="qzCheck()"${qz.done?' disabled':''}>Corregir</button><button onclick="qz=null;render()">Cancelar</button></div><div id="res"></div>`;
+}
+
+function prog(){
+  const seen=V.filter(v=>S[v.id]),good=V.filter(v=>S[v.id]&&S[v.id].last===1).length;
+  const tdy=M.day===day()?M.today||0:0,due=deck('due').length;
+  return `<div class="card"><h3>Racha: ${M.streak||0} día(s) · Hoy: ${tdy} / 50 respuestas</h3><div class="bar"><i style="width:${Math.min(100,tdy*2)}%"></i></div><p class="mut">Pendientes de repaso hoy: ${due}</p></div><div class="card"><h2>${good} de 29 verbos acertados en tu último intento</h2><div class="bar"><i style="width:${good/29*100}%"></i></div><p class="mut">${seen.length} practicados hasta ahora. Verde: última respuesta correcta. Rojo: última respuesta incorrecta. Gris: sin probar.</p></div>
+  <div class="grid">${V.map(v=>{const s=S[v.id];return `<div class="v ${s?(s.last?'g':'w'):''}">${v.inf}<small>${s?s.ok+' bien · '+s.ko+' mal':'–'}</small></div>`}).join('')}</div>
+  <div class="row"><button class="pri" onclick="fc=null;window.deckPick='weak';go('cards')">Practicar verbos flojos</button><button onclick="exp()">Exportar progreso</button><button onclick="this.nextElementSibling.click()">Importar progreso</button><input type="file" accept=".json" hidden onchange="imp(this.files[0])"><button onclick="if(confirm('¿Borrar todo el progreso?')){S={};save();render()}">Borrar progreso</button></div>`;
+}
+
+/* Audio, tema, exportar */
+function say(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';u.rate=.85;speechSynthesis.speak(u)}catch(e){}}
+const sayRow=id=>{const v=V[id];say([v.inf,v.past,v.pp].map(x=>x.split('/')[0]).join(', '))};
+function applyTheme(){const r=document.documentElement,t=M.theme||'auto';t==='auto'?r.removeAttribute('data-theme'):r.setAttribute('data-theme',t);$('th').textContent='Tema: '+({auto:'auto',light:'claro',dark:'oscuro'})[t]}
+function theme(){const o=['auto','light','dark'];M.theme=o[(o.indexOf(M.theme||'auto')+1)%3];applyTheme();save()}
+function exp(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({S,M})],{type:'application/json'}));a.download='progreso-verbos.json';a.click()}
+function imp(f){if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);S=d.S||{};M=Object.assign(M,d.M||{});save();applyTheme();render()}catch(e){alert('Archivo no válido')}};r.readAsText(f)}
+function pick(){const g=K[Math.random()*4|0];let t;do{t=K[Math.random()*4|0]}while(t===g);return{g,t}}
+
+/* Tipo test */
+function mcStart(){let l=deck($('md').value);if(!l.length)l=V;
+  mc={i:0,n:0,sel:null,q:shuffle(l).slice(0,10).map(v=>{const {g,t}=pick(),c=v[t];
+    const w=[...new Set(shuffle(V.filter(x=>x.id!==v.id&&x[t]!==c).map(x=>x[t])))].slice(0,3);return{id:v.id,g,t,o:shuffle([c,...w])}})};render()}
+function mcPick(j){const q=mc.q[mc.i];if(mc.sel!==null)return;mc.sel=j;const ok=q.o[j]===V[q.id][q.t];if(ok)mc.n++;mark(q.id,ok);render()}
+function mcNext(){mc.i++;mc.sel=null;render()}
+function test(){
+  if(!mc)return `<div class="card"><h2>Tipo test</h2><p class="mut">10 preguntas con 4 opciones. Elige la forma correcta.</p><div class="row"><select id="md" aria-label="Verbos">${opts(DECKS,'all')}</select><button class="pri" onclick="mcStart()">Empezar</button></div></div>`;
+  if(mc.i>=mc.q.length){const n=mc.n,t=mc.q.length;mc=null;return `<div class="card"><h2>${n} / ${t} correctas</h2><div class="row"><button class="pri" onclick="render()">Otro test</button><button onclick="go('exam')">Hoja de examen</button></div></div>`}
+  const q=mc.q[mc.i],v=V[q.id],ans=v[q.t];
+  return `<div class="row"><div class="bar" style="flex:1"><i style="width:${mc.i/mc.q.length*100}%"></i></div><span class="mut">${mc.i+1}/${mc.q.length}</span></div>
+  <div class="card"><p class="mut">${L[q.g]}</p><h2>${v[q.g]}</h2><p>Elige: <b>${L[q.t]}</b></p>${q.o.map((o,j)=>`<button class="opt ${mc.sel===null?'':o===ans?'ok':j===mc.sel?'no':''}" onclick="mcPick(${j})">${o}</button>`).join('')}</div>
+  ${mc.sel!==null?`<button class="pri" onclick="mcNext()">${mc.i+1<mc.q.length?'Siguiente':'Ver resultado'}</button>`:''}`}
+
+/* Sprint 60 s */
+function spNew(){const {g,t}=pick();sp.cur={id:Math.random()*29|0,g,t}}
+function spStart(){sp={t:60,n:0,tot:0,over:false,fb:''};spNew();sp.h=setInterval(()=>{sp.t--;const e=$('tm');if(e)e.textContent=sp.t;
+  if(sp.t<=0){clearInterval(sp.h);sp.over=true;if(sp.n>(M.best||0)){M.best=sp.n;sp.rec=1;save()}if(view==='sprint')render()}},1000);render();$('si').focus()}
+function spSubmit(){if(!sp||sp.over)return;const c=sp.cur,ok=right($('si').value,V[c.id][c.t]);sp.tot++;mark(c.id,ok);
+  if(ok){sp.n++;sp.fb=''}else sp.fb='Era: '+V[c.id][c.t];spNew();render();$('si').focus()}
+function sprint(){
+  if(!sp)return `<div class="card"><h2>Sprint de 60 segundos</h2><p class="mut">Te damos una forma y escribes otra. Todas las que puedas. Récord: ${M.best||0}</p><button class="pri" onclick="spStart()">Empezar</button></div>`;
+  if(sp.over){const r=sp;sp=null;return `<div class="card"><h2>${r.n} aciertos de ${r.tot}</h2><p>${r.rec?'¡Nuevo récord!':'Récord: '+(M.best||0)}</p><button class="pri" onclick="render()">Otra vez</button></div>`}
+  const c=sp.cur,v=V[c.id];
+  return `<div class="row"><b>⏱ <span id="tm">${sp.t}</span> s</b><span class="mut">Aciertos: ${sp.n}</span></div><div class="card"><p class="mut">${L[c.g]}</p><h2>${v[c.g]}</h2><p>Escribe: <b>${L[c.t]}</b></p><input id="si" class="big-in" autocomplete="off" autocapitalize="none" spellcheck="false" aria-label="${L[c.t]}"><p style="color:var(--bad)">${sp.fb}</p></div>`}
+
+document.addEventListener('keydown',e=>{
+  const t=e.target;
+  if(t.id==='si'&&e.key==='Enter'){spSubmit();e.preventDefault();return}
+  if(t.tagName==='INPUT'&&e.key==='Enter'){const i=[...document.querySelectorAll('.sheet input')],n=i[i.indexOf(t)+1];if(n)n.focus();else if(qz&&!qz.done)qzCheck();e.preventDefault();return}
+  if(view!=='cards'||!fc||!fc.q.length||t.tagName==='SELECT')return;
+  if(e.key===' '){fc.flip=!fc.flip;render();e.preventDefault()}
+  else if(fc.flip&&e.key==='ArrowRight')fcAns(true);
+  else if(fc.flip&&e.key==='ArrowLeft')fcAns(false);
+});
+applyTheme();render();
+if('serviceWorker' in navigator)addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
+</script>
+</body>
+</html>
