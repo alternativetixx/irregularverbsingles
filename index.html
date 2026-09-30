@@ -7,7 +7,7 @@
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg"><meta name="theme-color" content="#0B7A75">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Source+Sans+3:wght@400;600&display=swap">
 <style>
-:root{--bg:#EEF2F0;--card:#fff;--ink:#14262B;--mut:#5A6B70;--line:#D3DCD9;--acc:#0B7A75;--acc2:#E2F1EF;--ok:#237A45;--okbg:#DDF1E4;--bad:#C2392C;--badbg:#FBE2DE;--on:#fff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root{--bg:#EEF2F0;--card:#fff;--ink:#14262B;--mut:#5A6B70;--line:#D3DCD9;--acc:#0B7A75;--acc2:#E2F1EF;--ok:#237A45;--okbg:#DDF1E4;--bad:#C2392C;--badbg:#FBE2DE;--on:#fff;box-sizing:border-box;padding:0;margin:0}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0F1A1D;--card:#17262A;--ink:#E6EEEC;--mut:#93A6A9;--line:#2B3F43;--acc:#4FC3BB;--acc2:#17353A;--ok:#6ED08F;--okbg:#16372A;--bad:#FF8A7C;--badbg:#3D1F1C;--on:#0F1A1D}}
 :root[data-theme="dark"]{--bg:#0F1A1D;--card:#17262A;--ink:#E6EEEC;--mut:#93A6A9;--line:#2B3F43;--acc:#4FC3BB;--acc2:#17353A;--ok:#6ED08F;--okbg:#16372A;--bad:#FF8A7C;--badbg:#3D1F1C;--on:#0F1A1D}
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
@@ -62,7 +62,7 @@ td.n{color:var(--mut);width:2em}
 </style>
 </head>
 <body>
-<header style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start"><div><h1>Verbos irregulares 1</h1><p>29 verbos · infinitivo, pasado simple, participio pasado, català</p></div><button id="th" onclick="theme()"></button></header>
+<header style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start"><div><h1>Verbos irregulares 1</h1><p>29 verbos · infinitivo, pasado simple, participio pasado, català</p></div><button onclick="theme()" id="th">Tema: auto</button></header>
 <nav id="nav"></nav>
 <main id="app"></main>
 <script>
@@ -96,7 +96,7 @@ fight|fought|fought|lluitar/barallar-se
 find|found|found|trobar
 fly|flew|flown|volar`.split('\n').map((l,i)=>{const a=l.split('|');return{id:i,inf:a[0],past:a[1],pp:a[2],cat:a[3]}});
 const K=['inf','past','pp','cat'],L={inf:'Infinitivo',past:'Pasado simple',pp:'Participio pasado',cat:'Català'};
-const G=[['Las tres formas iguales',['cost','cut']],['Pasado = participio',['bring','build','buy','catch','feed','feel','fight','find','burn','dream']],['Infinitivo = participio',['become','come']],['Cambio de vocal i – a – u',['begin','drink']],['Especiales',['be','can']],['Participio acaba en -n / -ne',['beat','bite','blow','break','choose','draw','drive','eat','fall','fly','do']]];
+const G=[['Las tres formas iguales',['cost','cut']],['Pasado = participio',['bring','build','buy','catch','feed','feel','fight','find','burn','dream']],['Infinitivo = participio',['become','come','run']],['Pasado se parece al infinitivo con cambio de vocal',['begin','drink','drive','eat','fall','fight','find','fly','ring','sing','speak','swim','take','write']],['Verbos con -ght',['bring','buy','catch','fight','think','teach']],['Verbos irregulares muy comunes',['be','do','go','have','make','say','see','take','tell','write']]];
 const TABS=[['plan','Plan'],['learn','Aprender'],['cards','Tarjetas'],['exam','Examen'],['test','Tipo test'],['sprint','Sprint'],['prog','Progreso']];
 let view='plan',hide=new Set(),fc=null,qz=null,S={},M={},mc=null,sp=null;
 try{S=JSON.parse(localStorage.getItem('iv1')||'{}')}catch(e){}
@@ -135,17 +135,16 @@ function plan(){
 
 function learn(){
   const f=window.lf||'all';
-  const rows=deck(f).map(v=>`<tr><td class="n">${v.id+1}</td>${K.map(k=>`<td class="c c-${k}" onclick="this.classList.toggle('rev')"><span>${v[k]}</span></td>`).join('')}<td><button class="sp" aria-label="Escuchar ${v.inf}" onclick="sayRow(${v.id})">🔊</button></td></tr>`).join('');
+  const rows=deck(f).map(v=>`<tr><td class="n">${v.id+1}</td>${K.map(k=>`<td class="c c-${k}" onclick="this.classList.toggle('rev')"><span>${v[k]}</span></td>`).join('')}<td><button class="sp" aria-label="Pronunciar ${v.inf}" onclick="sayRow(${v.id})">🔊</button></td></tr>`).join('');
   const groups=G.map(([n,l])=>`<div class="card"><h3>${n}</h3>${l.map(x=>{const v=V.find(y=>y.inf===x);return `<span class="chip">${v.inf} – ${v.past} – ${v.pp}</span>`}).join('')}</div>`).join('');
   return `<h2>Patrones</h2>${groups}
   <h2>Tapa y ponte a prueba</h2>
-  <div class="row"><span class="mut">Tapar:</span>${K.map(k=>`<button class="${hide.has(k)?'on':''}" onclick="hide.has('${k}')?hide.delete('${k}'):hide.add('${k}');render()">${L[k]}</button>`).join('')}
-  <select onchange="window.lf=this.value;render()" aria-label="Verbos">${opts(DECKS.slice(0,4),f)}</select></div>
+  <div class="row"><span class="mut">Tapar:</span>${K.map(k=>`<button class="${hide.has(k)?'on':''}" onclick="hide.has('${k}')?hide.delete('${k}'):hide.add('${k}');render()">${L[k]}</button>`).join('')}</div>
+  <div class="row"><select onchange="window.lf=this.value;render()" aria-label="Verbos">${opts(DECKS.slice(0,4),f)}</select></div>
   <p class="mut">Di la respuesta en voz alta y toca una casilla gris para verla.</p>
   <div class="card wrap"><table class="cv"><thead><tr><th></th>${K.map(k=>`<th>${L[k]}</th>`).join('')}<th></th></tr></thead><tbody>${rows}</tbody></table></div>${hideStyle()}`;
 }
 function hideStyle(){
-  // columns not covered are always visible
   const vis=K.filter(k=>!hide.has(k)).map(k=>`.cv td.c-${k} span{background:none!important;color:inherit!important;cursor:default}`).join('');
   return `<style>${vis}</style>`;
 }
@@ -166,12 +165,12 @@ function cards(){
   <div class="row"><select id="fd" aria-label="Mazo">${opts(DECKS,window.deckPick||'all')}</select>
   <select id="ff" aria-label="Frente"><option value="rand">Frente: aleatorio</option>${K.map(k=>`<option value="${k}">Frente: ${L[k]}</option>`).join('')}</select>
   <button class="pri" onclick="fcStart()">Empezar</button></div></div>`;
-  if(!fc.q.length){const t=fc.total;fc=null;return `<div class="card"><h2>Mazo terminado</h2><p>Has superado las ${t} tarjetas. Prueba ahora la hoja de examen.</p><div class="row"><button class="pri" onclick="go('exam')">Hoja de examen</button><button onclick="render()">Nuevo mazo</button></div></div>`}
+  if(!fc.q.length){const t=fc.total;fc=null;return `<div class="card"><h2>Mazo terminado</h2><p>Has superado las ${t} tarjetas. Prueba ahora la hoja de examen.</p><div class="row"><button class="pri" onclick="go('exam')">Hoja de examen</button><button onclick="render()">Otra vez</button></div></div>`;}
   const c=fc.q[0],v=V[c.id];
-  const body=fc.flip?`<dl>${K.map(k=>`<dt>${L[k]}</dt><dd class="${k===c.f?'g':''}">${v[k]}</dd>`).join('')}</dl>`:`<div class="mut">${L[c.f]}</div><div class="big">${v[c.f]}</div><p class="mut">Toca para girar (espacio)</p>`;
+  const body=fc.flip?`<dl>${K.map(k=>`<dt>${L[k]}</dt><dd class="${k===c.f?'g':''}">${v[k]}</dd>`).join('')}</dl>`:`<div class="mut">${L[c.f]}</div><div class="big">${v[c.f]}</div><p class="mut">Toca para ver la respuesta completa.</p>`;
   return `<div class="row"><div class="bar" style="flex:1"><i style="width:${fc.known/fc.total*100}%"></i></div><span class="mut">${fc.known}/${fc.total} sabidas · quedan ${fc.q.length}</span></div>
   <div class="card fc" onclick="fc.flip=!fc.flip;render()" tabindex="0">${body}</div>
-  <div class="row" style="justify-content:center">${fc.flip?`<button class="no" onclick="fcAns(false)">Otra vez (←)</button><button class="ok" onclick="fcAns(true)">Lo sé (→)</button>`:`<button onclick="fc.flip=true;render()">Ver respuesta</button>`}<button onclick="sayRow(${c.id})">🔊 Escuchar</button><button onclick="fc=null;render()">Salir</button></div>`;
+  <div class="row" style="justify-content:center">${fc.flip?`<button class="no" onclick="fcAns(false)">Otra vez (←)</button><button class="ok" onclick="fcAns(true)">Lo sé (→)</button>`:`<button class="pri" onclick="fc.flip=!fc.flip;render()">Voltear</button>`}</div>`;
 }
 
 /* Exam sheet */
@@ -186,18 +185,17 @@ function qzCheck(){
     K.forEach(k=>{if(k===r.g)return;const inp=$(`q${i}${k}`);cells++;
       const ok=right(inp.value,r.v[k]);inp.className=ok?'ok':'bad';inp.readOnly=true;
       const old=inp.nextElementSibling;if(old)old.remove();
-      if(ok)good++;else{all=false;inp.insertAdjacentHTML('afterend',`<span class="fix">${r.v[k]}</span>`)}});
+      if(ok)good++;else{all=false;inp.insertAdjacentHTML('afterend',`<span class="fix">${r.v[k]}</span>`)} });
     mark(r.v.id,all);if(all)rows++;else bad.push(r.v)});
   qz.done=true;qz.bad=bad;
-  $('res').innerHTML=`<div class="card"><h2>${good} / ${cells} correctas</h2><p>${rows} de ${qz.rows.length} filas totalmente correctas.</p><div class="row">${bad.length?`<button class="pri" onclick="qzStart(qz.bad)">Repetir ${bad.length} fallos</button>`:''}<button onclick="qz=null;render()">Nueva hoja</button></div></div>`;
+  $('res').innerHTML=`<div class="card"><h2>${good} / ${cells} correctas</h2><p>${rows} de ${qz.rows.length} filas totalmente correctas.</p><div class="row">${bad.length?`<button class="pri" onclick="qzStart(qz.bad)">Repetir falladas</button>`:''}<button onclick="qz=null;render()">Cerrar</button></div></div>`;
   $('res').scrollIntoView({behavior:'smooth'});
 }
 function exam(){
-  if(!qz)return `<div class="card"><h2>Hoja de examen</h2><p class="mut">Cada fila te da una columna. Rellena las otras tres, como en el examen real. Usa / para dos respuestas (p. ej. burnt/burned). Se ignoran tildes y mayúsculas.</p>
-  <div class="row"><select id="qd" aria-label="Verbos">${opts(DECKS,'all')}</select>
+  if(!qz)return `<div class="card"><h2>Hoja de examen</h2><p class="mut">Cada fila te da una columna. Rellena las otras tres, como en el examen real. Usa / para dos respuestas (p. ej. burnt/burned).</p><div class="row"><select id="qd" aria-label="Verbos">${opts(DECKS,'all')}</select>
   <select id="qm" aria-label="Columna dada"><option value="mix">Dato: mezclado</option>${K.map(k=>`<option value="${k}">Dato: solo ${L[k]}</option>`).join('')}</select>
   <button class="pri" onclick="qzNew()">Crear hoja</button></div></div>`;
-  const rows=qz.rows.map((r,i)=>`<tr><td class="n">${i+1}</td>${K.map(k=>k===r.g?`<td class="giv">${r.v[k]}</td>`:`<td><input id="q${i}${k}" autocomplete="off" autocapitalize="none" spellcheck="false" aria-label="${L[k]} de la fila ${i+1}"></td>`).join('')}</tr>`).join('');
+  const rows=qz.rows.map((r,i)=>`<tr><td class="n">${i+1}</td>${K.map(k=>k===r.g?`<td class="giv">${r.v[k]}</td>`:`<td><input id="q${i}${k}" autocomplete="off" autocapitalize="none" spellcheck="false"></td>`).join('')}</tr>`).join('');
   return `<div class="card wrap sheet"><table><thead><tr><th></th>${K.map(k=>`<th>${L[k]}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>
   <div class="row"><button class="pri" onclick="qzCheck()"${qz.done?' disabled':''}>Corregir</button><button onclick="qz=null;render()">Cancelar</button></div><div id="res"></div>`;
 }
@@ -205,18 +203,18 @@ function exam(){
 function prog(){
   const seen=V.filter(v=>S[v.id]),good=V.filter(v=>S[v.id]&&S[v.id].last===1).length;
   const tdy=M.day===day()?M.today||0:0,due=deck('due').length;
-  return `<div class="card"><h3>Racha: ${M.streak||0} día(s) · Hoy: ${tdy} / 50 respuestas</h3><div class="bar"><i style="width:${Math.min(100,tdy*2)}%"></i></div><p class="mut">Pendientes de repaso hoy: ${due}</p></div><div class="card"><h2>${good} de 29 verbos acertados en tu último intento</h2><div class="bar"><i style="width:${good/29*100}%"></i></div><p class="mut">${seen.length} practicados hasta ahora. Verde: última respuesta correcta. Rojo: última respuesta incorrecta. Gris: sin probar.</p></div>
-  <div class="grid">${V.map(v=>{const s=S[v.id];return `<div class="v ${s?(s.last?'g':'w'):''}">${v.inf}<small>${s?s.ok+' bien · '+s.ko+' mal':'–'}</small></div>`}).join('')}</div>
-  <div class="row"><button class="pri" onclick="fc=null;window.deckPick='weak';go('cards')">Practicar verbos flojos</button><button onclick="exp()">Exportar progreso</button><button onclick="this.nextElementSibling.click()">Importar progreso</button><input type="file" accept=".json" hidden onchange="imp(this.files[0])"><button onclick="if(confirm('¿Borrar todo el progreso?')){S={};save();render()}">Borrar progreso</button></div>`;
+  return `<div class="card"><h3>Racha: ${M.streak||0} día(s) · Hoy: ${tdy} / 50 respuestas</h3><div class="bar"><i style="width:${Math.min(100,tdy*2)}%"></i></div><p class="mut">Pendientes de repaso: ${due}. Aciertos vistos: ${good}/${V.length}.</p></div>
+  <div class="card"><h3>Progreso</h3><div class="grid">${V.map(v=>{const s=S[v.id];return `<div class="v ${s?(s.last?'g':'w'):''}">${v.inf}<small>${s?s.ok+' bien · '+s.ko+' mal':'–'}</small></div>`}).join('')}</div></div>
+  <div class="row"><button class="pri" onclick="fc=null;window.deckPick='weak';go('cards')">Practicar verbos flojos</button><button onclick="exp()">Exportar progreso</button><button onclick="this.disabled=true;imp(prompt('¿Qué archivo quieres importar?'))">Importar</button></div>`;
 }
 
 /* Audio, tema, exportar */
 function say(t){try{speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='en-GB';u.rate=.85;speechSynthesis.speak(u)}catch(e){}}
 const sayRow=id=>{const v=V[id];say([v.inf,v.past,v.pp].map(x=>x.split('/')[0]).join(', '))};
-function applyTheme(){const r=document.documentElement,t=M.theme||'auto';t==='auto'?r.removeAttribute('data-theme'):r.setAttribute('data-theme',t);$('th').textContent='Tema: '+({auto:'auto',light:'claro',dark:'oscuro'})[t]}
+function applyTheme(){const r=document.documentElement,t=M.theme||'auto';t==='auto'?r.removeAttribute('data-theme'):r.setAttribute('data-theme',t);$('th').textContent='Tema: '+({auto:'auto',light:'claro',dark:'oscuro'}[t]);}
 function theme(){const o=['auto','light','dark'];M.theme=o[(o.indexOf(M.theme||'auto')+1)%3];applyTheme();save()}
 function exp(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({S,M})],{type:'application/json'}));a.download='progreso-verbos.json';a.click()}
-function imp(f){if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);S=d.S||{};M=Object.assign(M,d.M||{});save();applyTheme();render()}catch(e){alert('Archivo no válido')}};r.readAsText(f)}
+function imp(f){if(!f)return;const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);S=d.S||{};M=Object.assign(M,d.M||{});save();applyTheme();render()}catch(e){alert('Archivo no válido')} };r.readAsText(f)}
 function pick(){const g=K[Math.random()*4|0];let t;do{t=K[Math.random()*4|0]}while(t===g);return{g,t}}
 
 /* Tipo test */
@@ -227,11 +225,12 @@ function mcPick(j){const q=mc.q[mc.i];if(mc.sel!==null)return;mc.sel=j;const ok=
 function mcNext(){mc.i++;mc.sel=null;render()}
 function test(){
   if(!mc)return `<div class="card"><h2>Tipo test</h2><p class="mut">10 preguntas con 4 opciones. Elige la forma correcta.</p><div class="row"><select id="md" aria-label="Verbos">${opts(DECKS,'all')}</select><button class="pri" onclick="mcStart()">Empezar</button></div></div>`;
-  if(mc.i>=mc.q.length){const n=mc.n,t=mc.q.length;mc=null;return `<div class="card"><h2>${n} / ${t} correctas</h2><div class="row"><button class="pri" onclick="render()">Otro test</button><button onclick="go('exam')">Hoja de examen</button></div></div>`}
+  if(mc.i>=mc.q.length){const n=mc.n,t=mc.q.length;mc=null;return `<div class="card"><h2>${n} / ${t} correctas</h2><div class="row"><button class="pri" onclick="render()">Otro test</button><button onclick="go('prog')">Ver progreso</button></div></div>`;}
   const q=mc.q[mc.i],v=V[q.id],ans=v[q.t];
   return `<div class="row"><div class="bar" style="flex:1"><i style="width:${mc.i/mc.q.length*100}%"></i></div><span class="mut">${mc.i+1}/${mc.q.length}</span></div>
-  <div class="card"><p class="mut">${L[q.g]}</p><h2>${v[q.g]}</h2><p>Elige: <b>${L[q.t]}</b></p>${q.o.map((o,j)=>`<button class="opt ${mc.sel===null?'':o===ans?'ok':j===mc.sel?'no':''}" onclick="mcPick(${j})">${o}</button>`).join('')}</div>
-  ${mc.sel!==null?`<button class="pri" onclick="mcNext()">${mc.i+1<mc.q.length?'Siguiente':'Ver resultado'}</button>`:''}`}
+  <div class="card"><p class="mut">${L[q.g]}</p><h2>${v[q.g]}</h2><p>Elige: <b>${L[q.t]}</b></p>${q.o.map((o,j)=>`<button class="opt ${mc.sel===null?'':o===ans?'ok':j===mc.sel?'no':''}" onclick="mcPick(${j})">${o}</button>`).join('')}
+  ${mc.sel!==null?`<button class="pri" onclick="mcNext()">${mc.i+1<mc.q.length?'Siguiente':'Ver resultado'}</button>`:''}</div>`;
+}
 
 /* Sprint 60 s */
 function spNew(){const {g,t}=pick();sp.cur={id:Math.random()*29|0,g,t}}
@@ -240,10 +239,76 @@ function spStart(){sp={t:60,n:0,tot:0,over:false,fb:''};spNew();sp.h=setInterval
 function spSubmit(){if(!sp||sp.over)return;const c=sp.cur,ok=right($('si').value,V[c.id][c.t]);sp.tot++;mark(c.id,ok);
   if(ok){sp.n++;sp.fb=''}else sp.fb='Era: '+V[c.id][c.t];spNew();render();$('si').focus()}
 function sprint(){
-  if(!sp)return `<div class="card"><h2>Sprint de 60 segundos</h2><p class="mut">Te damos una forma y escribes otra. Todas las que puedas. Récord: ${M.best||0}</p><button class="pri" onclick="spStart()">Empezar</button></div>`;
-  if(sp.over){const r=sp;sp=null;return `<div class="card"><h2>${r.n} aciertos de ${r.tot}</h2><p>${r.rec?'¡Nuevo récord!':'Récord: '+(M.best||0)}</p><button class="pri" onclick="render()">Otra vez</button></div>`}
+  if(!sp)return `<div class="card"><h2>Sprint de 60 segundos</h2><p class="mut">Te damos una forma y escribes otra. Todas las que puedas. Récord: ${M.best||0}</p><button class="pri" onclick="spStart()">Empezar sprint</button></div>`;
+  if(sp.over){const r=sp;sp=null;return `<div class="card"><h2>${r.n} aciertos de ${r.tot}</h2><p>${r.rec?'¡Nuevo récord!':'Récord: '+(M.best||0)}</p><button class="pri" onclick="render()">Otro sprint</button></div>`;}
   const c=sp.cur,v=V[c.id];
-  return `<div class="row"><b>⏱ <span id="tm">${sp.t}</span> s</b><span class="mut">Aciertos: ${sp.n}</span></div><div class="card"><p class="mut">${L[c.g]}</p><h2>${v[c.g]}</h2><p>Escribe: <b>${L[c.t]}</b></p><input id="si" class="big-in" autocomplete="off" autocapitalize="none" spellcheck="false" aria-label="${L[c.t]}"><p style="color:var(--bad)">${sp.fb}</p></div>`}
+  return `<div class="row"><b>⏱ <span id="tm">${sp.t}</span> s</b><span class="mut">Aciertos: ${sp.n}</span></div><div class="card"><p class="mut">${L[c.g]}</p><h2>${v[c.g]}</h2><p>Escribe: <b>${L[c.t]}</b></p><input id="si" class="big-in" autocomplete="off" spellcheck="false" value="" onkeydown="if(event.key==='Enter'){spSubmit();event.preventDefault()}" /><p class="mut">${sp.fb||'Escribe la forma correcta.'}</p></div>`;
+}
+
+/* Device & viewport detection */
+const deviceInfo = {
+  type: 'desktop',
+  isMobile: false,
+  isTablet: false,
+  isDesktop: true,
+  isTouch: false,
+  width: window.innerWidth,
+  height: window.innerHeight,
+  breakpoint: 'desktop'
+};
+
+function updateDeviceInfo() {
+  const ua = navigator.userAgent || '';
+  const width = window.innerWidth;
+  const isTouch = window.matchMedia('(pointer: coarse)').matches || navigator.maxTouchPoints > 0 || 'ontouchstart' in window;
+  const mobileUA = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+  const tabletUA = /(ipad|tablet|playbook|silk)|(android(?!.*mobile))/i.test(ua);
+
+  let type = 'desktop';
+  if (mobileUA && !tabletUA && width <= 767) type = 'mobile';
+  else if ((width <= 1024 && width > 767) || tabletUA) type = 'tablet';
+  else if (width <= 767) type = 'mobile';
+
+  deviceInfo.type = type;
+  deviceInfo.isMobile = type === 'mobile';
+  deviceInfo.isTablet = type === 'tablet';
+  deviceInfo.isDesktop = type === 'desktop';
+  deviceInfo.isTouch = isTouch;
+  deviceInfo.width = width;
+  deviceInfo.height = window.innerHeight;
+  deviceInfo.breakpoint = width < 768 ? 'mobile' : width < 1024 ? 'tablet' : 'desktop';
+
+  document.documentElement.dataset.device = deviceInfo.type;
+  document.documentElement.dataset.breakpoint = deviceInfo.breakpoint;
+  document.body.dataset.device = deviceInfo.type;
+  document.body.dataset.width = String(deviceInfo.width);
+  document.body.dataset.height = String(deviceInfo.height);
+
+  return deviceInfo;
+}
+
+function observeViewportSize() {
+  updateDeviceInfo();
+
+  const onResize = () => updateDeviceInfo();
+  window.addEventListener('resize', onResize);
+
+  if ('ResizeObserver' in window && document.body) {
+    const resizeObserver = new ResizeObserver(() => updateDeviceInfo());
+    resizeObserver.observe(document.body);
+  }
+
+  return { destroy() { window.removeEventListener('resize', onResize); } };
+}
+
+window.deviceInfo = deviceInfo;
+window.updateDeviceInfo = updateDeviceInfo;
+window.observeViewportSize = observeViewportSize;
+
+window.addEventListener('load', () => {
+  updateDeviceInfo();
+  observeViewportSize();
+});
 
 document.addEventListener('keydown',e=>{
   const t=e.target;
